@@ -37,46 +37,6 @@ void ADrone::BeginPlay()
 	}
 }
 
-float ADrone::ThrustFrontRight(float inpower) {
-	return  ForceScaleFactor* ThrustFactorFront* inpower;
-}
-float ADrone::ThrustFrontLeft(float inpower) {
-	return  ForceScaleFactor* ThrustFactorFront* inpower;
-}
-float ADrone::ThrustBackRight(float inpower) {
-	return  ForceScaleFactor* ThrustFactorBack* inpower;
-}
-float ADrone::ThrustBackLeft(float inpower) {
-	return ForceScaleFactor* ThrustFactorBack* inpower;
-}
-
-FVector ADrone::TorqueFrontLeft(FVector inThrust)
-{
-	return FVector::CrossProduct(FrontLeftMotorPos, inThrust) * ForceScaleFactor;
-}
-
-FVector ADrone::TorqueFrontRight(FVector inThrust)
-{
-	return FVector::CrossProduct(FrontRightMotorPos, inThrust) * ForceScaleFactor;
-}
-
-FVector ADrone::TorqueBackLeft(FVector inThrust)
-{
-	return FVector::CrossProduct(BackLeftMotorPos, inThrust) * ForceScaleFactor;
-}
-
-FVector ADrone::TorqueBackRight(FVector inThrust)
-{
-	return FVector::CrossProduct(BackRightMotorPos, inThrust) * ForceScaleFactor;
-}
-
-
-
-FVector ADrone::TotalSpin(FVector FL, FVector FR, FVector BL, FVector BR) {
-	constexpr float b = 1.0f;	// b is a constant we can make up later (we will get it from Propulsion)
-	return b * (FL + BR - FR - BL) * ForceScaleFactor;
-}
-
 
 // Called every frame
 void ADrone::Tick(float DeltaTime)
@@ -140,26 +100,8 @@ void ADrone::Tick(float DeltaTime)
 #endif
 }
 
-void ADrone::Power(float amt) {
-	power = amt;
-}
-
-void ADrone::Forward(float amt) {
-	moveVec.X = amt;
-}
-
-void ADrone::Right(float amt) {
-	moveVec.Y = amt;
-}
-
-void ADrone::RotateZ(float amt) {
-	moveVec.Z = amt;
-	currentYaw = amt;	// slightly redundant...
-}
-
 void ADrone::Reset() {
 	SetActorLocation(startPos);
 	collision->SetAllPhysicsLinearVelocity(FVector(0, 0, 0));
 	collision->SetAllPhysicsAngularVelocityInDegrees(FVector(0, 0, 0));
-
 }

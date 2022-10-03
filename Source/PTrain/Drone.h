@@ -29,44 +29,14 @@ protected:
 	bool isHovering = true;	// begin in hover mode 
 
 	FVector startPos;
-	float currentBank = 0;
-	float currentPitch = 0;
-	float currentYaw = 0;
-	
-	// thrust functions per motor
-	float ThrustFrontRight(float);
-	float ThrustFrontLeft(float);
-	float ThrustBackRight(float);
-	float ThrustBackLeft(float);
-
-	// torque functions per motor
-	FVector TorqueFrontLeft(FVector);
-	FVector TorqueFrontRight(FVector);
-	FVector TorqueBackLeft(FVector);
-	FVector TorqueBackRight(FVector);
-	FVector TotalSpin(FVector, FVector, FVector, FVector);
 
 	TArray<AStaticPart*> allParts;
 	TArray<AMotor*> allMotors;
-
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void Power(float percent);
-	void Forward(float amt);
-	void Right(float amt);
-	void RotateZ(float amt);
-	void SetBank(float amt) {	// see APilot::SetBank for amounts
-		currentBank = amt;
-	}
-	void SetPitch(float amt) {
-		currentPitch = amt;
-	}
-	void Switch() {
-		isHovering = !isHovering;
-	}
 	void Reset();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

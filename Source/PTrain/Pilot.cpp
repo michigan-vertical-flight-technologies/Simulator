@@ -30,6 +30,7 @@ void APilot::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADrone::StaticClass(), FoundActors);
 
 	if (FoundActors.Num() > 0){
+		//TODO: grab the flight controller object off the drone and save that 
 		Drone = Cast<ADrone>(FoundActors[0]);
 	}
 	else {
@@ -53,47 +54,15 @@ void APilot::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis("Power",this,&APilot::Power);
+	/*PlayerInputComponent->BindAxis("Power", this, &APilot::Power);
 	PlayerInputComponent->BindAxis("Forward", this, &APilot::Forward);
 	PlayerInputComponent->BindAxis("Right", this, &APilot::Right);
 	PlayerInputComponent->BindAxis("RotateZ", this, &APilot::RotateZ);
 	PlayerInputComponent->BindAxis("Bank", this, &APilot::SetBank);
 	PlayerInputComponent->BindAxis("Pitch", this, &APilot::SetPitch);
 	PlayerInputComponent->BindAction("SwitchMode", EInputEvent::IE_Pressed, this, &APilot::Switch);
-	PlayerInputComponent->BindAction("ResetPlane", EInputEvent::IE_Pressed, this, &APilot::ResetPlane);
+	PlayerInputComponent->BindAction("ResetPlane", EInputEvent::IE_Pressed, this, &APilot::ResetPlane);*/
 	PlayerInputComponent->BindAction("ToggleHMD", EInputEvent::IE_Pressed, this, &APilot::ToggleHMD);
-}
-
-void APilot::Power(float amt) {
-	Drone->Power(amt);
-}
-
-void APilot::Right(float amt) {
-	Drone->Right(amt);
-}
-
-void APilot::Forward(float amt) {
-	Drone->Forward(amt);
-}
-
-void APilot::RotateZ(float amt) {
-	Drone->RotateZ(amt);
-}
-
-void APilot::Switch() {
-	Drone->Switch();
-}
-
-void APilot::ResetPlane() {
-	Drone->Reset();
-}
-
-void APilot::SetBank(float amt) {
-	Drone->SetBank(amt);
-}
-
-void APilot::SetPitch(float amt) {
-	Drone->SetPitch(amt);
 }
 
 void APilot::ToggleHMD() {

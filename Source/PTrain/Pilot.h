@@ -36,14 +36,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UCapsuleComponent* collision;
 
-	void Power(float amt);
-	void Forward(float amt);
-	void Right(float amt);
-	void RotateZ(float amt);
-	void SetBank(float pos);	// -1 = full left, +1 = full right
-	void SetPitch(float amt);
-
-	void Switch();
-	void ResetPlane();
 	void ToggleHMD();
 };
