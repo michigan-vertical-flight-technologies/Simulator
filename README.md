@@ -4,24 +4,30 @@ This is the main source repository for the MVFT realtime aircraft simulator for 
 
 ## Setup
 To configure a CAEN machine to use the simulator in-editor, follow these instructions:
-1. Use AppsAnywhere to install Visual Studio and Unreal Engine 4.26 (NOT 4.23!)
-2. `git clone --depth=1` (to avoid downloading the entire history) __into `C:\TEMP`__. This is very important, because the temp folder is not networked. If you try to open the project from your home folder, it will probably not work.
+1. Use AppsAnywhere to install:
+   - Visual Studio
+   - Unreal Engine __4.26__ (NOT 4.23!)
+   - TortoiseGit
+2. Use TortoiseGit to clone this repository (enable Depth 1 to avoid downloading the entire history) __into your Downloads folder__. This is very important, because it is not networked. If you try to open the project from your home folder, it will probably error while filling up your network quota.
     - because of this, you must commit and push all changes you make before logging out, otherwise you may lose your work.
-3. Run `openall.bat` in the repository root folder. This will launch SteamVR and Unreal. Skip the SteamVR portions if you do not intend to use it. If there is an issue, you can open them manually by following these instructions:
+    - ![TortoiseGit](https://user-images.githubusercontent.com/55766810/193943765-d771fc12-c610-43bd-a685-58a3091e3165.png)
+3. Run `openall.bat` in the repository root folder. This will launch SteamVR (or skip if that is not installed) and Unreal. You can open SteamVR and Unreal manually by following these instructions:
     1. Launch SteamVR by going to `C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64` and opening `vrstartup.exe`. SteamVR may take you through the room configuration. Follow the on-screen prompts for room-size VR. 
     2. Open the PTrainer repository folder in Explorer and right-click `PTrain.uproject`, then select Open With, select Choose an App from this PC, then navigate to `C:\Program Files\Epic Games\UE_4.26\Engine\Binaries\Win64\UE4_Editor.exe`
 6. On first-time launch, Unreal should ask to compile content, press Yes, then that should complete and the editor window should appear.
     - Wait for shaders to finish compiling for visuals to be correct
     - It will take around 20 minutes for Unreal to first-time launch on a CAEN computer, so if it looks stuck, it's not, just give it some time (subsequent launches on the same machine will be much faster)
-7. To run in VR, select the dropdown menu next to Play, and select VR Preview. It will launch a separate window. To exit, press the escape key or alt-tab to the Unreal window.
+7. To run in VR, select the dropdown menu next to Play, and select VR Preview. SteamVR needs to be running (and have been launched before Unreal). It will launch a separate window. To exit, press the escape key or alt-tab to the Unreal window.
     
 To configure on a personal computer:
 1. Install prerequisites for your platform:
-    - All: SteamVR (optional) (for VR support, note SteamVR does not support macOS)
+    - All: 
+        - SteamVR (optional) (for VR support, note SteamVR does not support macOS)
+        - [git-lfs](https://git-lfs.github.com/) (required for binary file locking)
+        - Unreal Engine __4.26.3__.
     - macOS: Xcode
     - Windows: Visual Studio with Desktop Development for C++ module
-2. Install Unreal Engine. The installer should set `.uproject` file associations for you.
-3. Download this repository as zip, or clone using `git clone --depth=1`
+3. Clone using `git clone --depth=1`. If you did not install git-lfs, this will not work. 
 4. Open `PTrain.uproject`. When prompted to compile content, press Yes, and wait for that to complete. After that, the Editor window should appear. It should auto-launch SteamVR. If it does not, you must close Unreal, launch SteamVR manually, and then reopen Unreal. 
 
 ## Writing C++ code
@@ -31,6 +37,13 @@ To configure on a personal computer:
 2. Open the generated IDE project file and press the Start Debugging (Visual Studio) or Run (Xcode) button
     - This will launch the Editor with the debugger attached so C++ source debugging works
     - You can also use Attach To Process on an already-running Editor from your IDE to debug from there without restarting it
+3. Commit your changes and submit pull requests as normal.
+
+## Editing binary files (`.uasset`, `.umap`, `.fbx`, `.png`, etc)
+1. In Explorer, right-click the file you want to work on and press `TortoiseGit -> LFS -> Lock File`. __This is very important!!__ It will ensure nobody else edits that file and that you will be able to merge your changes correctly.
+2. Make your changes to the file
+3. Commit & submit PR as usual
+4. When the PR is merged, use TortoiseGit to unlock the file. 
 
 ## 3D Models
 We use Autodesk Maya for all model creation for use in the simulator. You can install Maya from AppsAnywhere when logged in to CAEN. You may optionally acquire a free student license for Maya from Autodesk
@@ -48,11 +61,11 @@ by providing a photo of your student ID when creating an educational account.
 6. To update your model in unreal after exporting a new version, right click the model in Assets and press Reimport.
 
 ## Usage In Editor
-- The `Arena` Level file contains the simulated environment. Simply press Play to start the simulation
+- The `Arena20XX` Level files contains the simulated environments. Press Play to start the simulation
 
 ## Generating Builds
-For CAEN
-- Run `build.bat`.The built program will be written to the parent directory (not in the repository folder) named WindowsNoEditor
+For CAEN (recommended)
+- Run `build.bat`.The built program will be written to the parent directory (not in the repository folder) named WindowsNoEditor. You might need to bake lighting in-editor first in order for the result to look correct. 
 
 For other platforms
 - Go to File->Package Project, and select the desired target. 
