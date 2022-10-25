@@ -57,4 +57,7 @@ public:
 		return FVector(0, 0, 0);
 	}
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Propeller Parameters")
+		float massKg = 1;
+
 };

@@ -47,13 +47,16 @@ void ADrone::Tick(float DeltaTime)
 		motor->PropagateSpeed(1.0);
 	}
 
+	float totalMassKg = 0;
 	// grab all the forces and torques
 	// apply it to the craft
 	auto dronePos = GetActorLocation();
 	for (auto part : allParts) {
 		collision->AddForce(part->CalcForces());
 		collision->AddTorque(part->CalcTorques(dronePos));
+		totalMassKg += part->massKg;
 	}
+	collision->SetMassOverrideInKg(NAME_None, totalMassKg);
 
 #if 0
 	auto localVelVec = UKismetMathLibrary::InverseTransformDirection(GetTransform(), GetVelocity());
