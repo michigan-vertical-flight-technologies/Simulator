@@ -18,13 +18,17 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	float targetPos = 90;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void AssumePose(float bounds);
+	// set rotation around the Z axis
+	void SetTargetPoseInDegrees(float pos);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Servo Parameters")
 		FVector2D AngleBounds = FVector2D(-90,90);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Servo Parameters")
+		float rotationRate = 0.01;
 };
