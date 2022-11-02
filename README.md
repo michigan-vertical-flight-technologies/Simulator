@@ -37,7 +37,7 @@ Make sure to work on a branch for each feature.
 2. Make your changes
 3. `git status`, read the output and use `git add <filename>` to include files 
 4. `git commit -m "explain your changes here"`
-5. `git push origin your-branch-name`
+5. `git push origin your-feature-name`
 6. Visit this page while logged in, you should see a `Compare & Pull Request` button, press it and fill out the form
 7. The Avionics lead will merge your changes
 
