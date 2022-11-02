@@ -44,7 +44,7 @@ void ADrone::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	for (auto motor : allMotors) {	// TODO: this should be handled by the ControlSurface object -- Drone should grab all ControlSurfaces and call Tick on them, which will tick motors
-		motor->PropagateSpeed(1.0);
+		motor->PropagateSpeed(0.0);
 	}
 
 	float totalMassKg = 0;

@@ -2,6 +2,7 @@
 
 
 #include "Servo.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 AServo::AServo()
@@ -15,17 +16,20 @@ AServo::AServo()
 void AServo::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void AServo::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	auto rotation = GetParentComponent()->GetRelativeRotation();
+	auto currentZ = rotation.Yaw;
+	UE_LOG(LogTemp, Warning, TEXT("%f -> %f"), currentZ,targetPos);
+	auto newZ = FMath::Lerp(currentZ, targetPos, rotationRate);
+	rotation.Yaw = newZ;
+	GetParentComponent()->SetRelativeRotation(rotation);
 }
 
-void AServo::AssumePose(float pos) {
-	//TODO: set actor local rotation based on lerp(pos, angle)
+void AServo::SetTargetPoseInDegrees(float pos) {
+	targetPos = FMath::Clamp(pos, AngleBounds.X, AngleBounds.Y);
 }
-

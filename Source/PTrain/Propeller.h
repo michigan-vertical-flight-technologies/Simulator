@@ -15,7 +15,7 @@ class PTRAIN_API APropeller : public AStaticPart
 	GENERATED_BODY()
 
 private:
-	float currentRotationSpeed;	// rotation speed is a float from 0 to 1, where 0 is off and 1 is the maximum speed
+	float currentRotationSpeed = 0;	// rotation speed is a float from 0 to 1, where 0 is off and 1 is the maximum speed
 public:
 	virtual FVector CalcForces() override;
 	virtual FVector CalcTorques(const FVector& droneRootPos) override;
