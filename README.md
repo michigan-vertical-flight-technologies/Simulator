@@ -31,6 +31,16 @@ To configure on a personal computer:
 3. Clone using `git clone --depth=1`. If you did not install git-lfs, this will not work. 
 4. Open `PTrain.uproject`. When prompted to compile content, press Yes, and wait for that to complete. After that, the Editor window should appear. It should auto-launch SteamVR. If it does not, you must close Unreal, launch SteamVR manually, and then reopen Unreal. 
 
+## Pushing your changes
+Make sure to work on a branch for each feature.
+1. `git checkout -b your-feature-name`
+2. Make your changes
+3. `git status`, read the output and use `git add <filename>` to include files 
+4. `git commit -m "explain your changes here"`
+5. `git push origin your-branch-name`
+6. Visit this page while logged in, you should see a `Compare & Pull Request` button, press it and fill out the form
+7. The Avionics lead will merge your changes
+
 ## Writing C++ code
 1. Right-click `PTrain.uproject` and select Generate Xcode/Visual Studio Project
     - If this option is not available, open `PTrain.uproject` and go to File->Generate Xcode/Visual Studio Project
