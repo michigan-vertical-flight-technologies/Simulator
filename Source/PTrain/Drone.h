@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "StaticPart.h"
 #include "Motor.h"
+#include "FlightControllerBase.h"
 #include "Drone.generated.h"
 
 #define BP_CAT "Aircraft Parameters"
@@ -31,7 +32,6 @@ protected:
 	FVector startPos;
 
 	TArray<AStaticPart*> allParts;
-	TArray<AMotor*> allMotors;
 
 public:	
 	// Called every frame
@@ -45,5 +45,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Aircraft Parameters")
 		float ForceScaleFactor = 10000;
 
-	void Switch();
+	AFlightControllerBase* activeFlightController = nullptr;
 };

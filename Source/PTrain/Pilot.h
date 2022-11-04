@@ -38,7 +38,7 @@ public:
 
 	void ToggleHMD();
 
-	void Switch() {
-		Drone->Switch();
+	void Switch(){
+		Drone->activeFlightController->Switch();
 	}
 };
