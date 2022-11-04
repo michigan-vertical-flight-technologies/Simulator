@@ -60,9 +60,9 @@ void APilot::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("RotateZ", this, &APilot::RotateZ);
 	PlayerInputComponent->BindAxis("Bank", this, &APilot::SetBank);
 	PlayerInputComponent->BindAxis("Pitch", this, &APilot::SetPitch);
-	PlayerInputComponent->BindAction("SwitchMode", EInputEvent::IE_Pressed, this, &APilot::Switch);
 	PlayerInputComponent->BindAction("ResetPlane", EInputEvent::IE_Pressed, this, &APilot::ResetPlane);*/
 	PlayerInputComponent->BindAction("ToggleHMD", EInputEvent::IE_Pressed, this, &APilot::ToggleHMD);
+	PlayerInputComponent->BindAction("SwitchMode", EInputEvent::IE_Pressed, this, &APilot::Switch);
 }
 
 void APilot::ToggleHMD() {

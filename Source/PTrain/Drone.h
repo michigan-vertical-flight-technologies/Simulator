@@ -45,4 +45,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Aircraft Parameters")
 		float ForceScaleFactor = 10000;
 
+	void Switch();
 };

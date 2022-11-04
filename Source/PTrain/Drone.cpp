@@ -4,6 +4,7 @@
 #include "Drone.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GenericPlatform/GenericPlatformMath.h"
+#include "Servo.h"
 
 // Sets default values
 ADrone::ADrone()
@@ -37,14 +38,24 @@ void ADrone::BeginPlay()
 	}
 }
 
+void ADrone::Switch() {
+	TArray<AActor*> allChildren;
+	GetAllChildActors(allChildren, true);
+	for (const auto actor : allChildren) {
+		if (auto servo = Cast<AServo>(actor)) {
+			servo->SetTargetPoseInDegrees(-90);
+		}
+	}
+}
+
 
 // Called every frame
 void ADrone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	for (auto motor : allMotors) {	// TODO: this should be handled by the ControlSurface object -- Drone should grab all ControlSurfaces and call Tick on them, which will tick motors
-		motor->PropagateSpeed(1.0);
+	for (auto motor : allMotors) {	// TODO: this should be handled by the FlightController object -- Drone should grab all FlightController and call Tick on them, which will tick motors
+		motor->PropagateSpeed(0.5);
 	}
 
 	float totalMassKg = 0;
