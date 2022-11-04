@@ -37,4 +37,8 @@ public:
 		UCapsuleComponent* collision;
 
 	void ToggleHMD();
+
+	void Switch(){
+		Drone->activeFlightController->Switch();
+	}
 };

@@ -4,6 +4,7 @@
 #include "Drone.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GenericPlatform/GenericPlatformMath.h"
+#include "Servo.h"
 
 // Sets default values
 ADrone::ADrone()
@@ -27,12 +28,25 @@ void ADrone::BeginPlay()
 	// grab the subobjects
 	TArray<AActor*> allChildren;
 	GetAllChildActors(allChildren, true);
+	// first find the FlightController
+	for (const auto actor : allChildren) {
+		if (auto controller = Cast<AFlightControllerBase>(actor)) {
+			activeFlightController = controller;
+			break;
+		}
+	}
+	// drone must have a flight controller!
+	check(activeFlightController != nullptr);
+
 	for (const auto actor : allChildren) {
 		if (auto motor = Cast<AMotor>(actor)) {
-			allMotors.Add(motor);
+			activeFlightController->RegisterMotor(motor);
 		}
 		else if (auto staticPart = Cast<AStaticPart>(actor)) {
 			allParts.Add(staticPart);
+		}
+		else if (auto servo = Cast<AServo>(actor)) {
+			activeFlightController->RegisterServo(servo);
 		}
 	}
 }
@@ -42,10 +56,6 @@ void ADrone::BeginPlay()
 void ADrone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	for (auto motor : allMotors) {	// TODO: this should be handled by the ControlSurface object -- Drone should grab all ControlSurfaces and call Tick on them, which will tick motors
-		motor->PropagateSpeed(1.0);
-	}
 
 	float totalMassKg = 0;
 	// grab all the forces and torques

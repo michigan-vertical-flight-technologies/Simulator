@@ -25,17 +25,6 @@ APilot::APilot()
 void APilot::BeginPlay()
 {
 	Super::BeginPlay();
-	// find the drone in the world 
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADrone::StaticClass(), FoundActors);
-
-	if (FoundActors.Num() > 0){
-		//TODO: grab the flight controller object off the drone and save that 
-		Drone = Cast<ADrone>(FoundActors[0]);
-	}
-	else {
-		checkf(false, TEXT("Scene must contain an object of subclass ADrone!"));
-	}
 }
 
 // Called every frame
@@ -54,15 +43,26 @@ void APilot::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// find the drone in the world 
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADrone::StaticClass(), FoundActors);
+
+	if (FoundActors.Num() > 0) {
+		Drone = Cast<ADrone>(FoundActors[0]);
+	}
+	else {
+		checkf(false, TEXT("Scene must contain an object of subclass ADrone!"));
+	}
+
 	/*PlayerInputComponent->BindAxis("Power", this, &APilot::Power);
 	PlayerInputComponent->BindAxis("Forward", this, &APilot::Forward);
 	PlayerInputComponent->BindAxis("Right", this, &APilot::Right);
 	PlayerInputComponent->BindAxis("RotateZ", this, &APilot::RotateZ);
 	PlayerInputComponent->BindAxis("Bank", this, &APilot::SetBank);
 	PlayerInputComponent->BindAxis("Pitch", this, &APilot::SetPitch);
-	PlayerInputComponent->BindAction("SwitchMode", EInputEvent::IE_Pressed, this, &APilot::Switch);
 	PlayerInputComponent->BindAction("ResetPlane", EInputEvent::IE_Pressed, this, &APilot::ResetPlane);*/
 	PlayerInputComponent->BindAction("ToggleHMD", EInputEvent::IE_Pressed, this, &APilot::ToggleHMD);
+	PlayerInputComponent->BindAction("SwitchMode", EInputEvent::IE_Pressed, this, &APilot::Switch);
 }
 
 void APilot::ToggleHMD() {

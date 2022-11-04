@@ -18,7 +18,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	float targetPos = 90;
+	float targetPos = 0;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -31,4 +31,5 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Servo Parameters")
 		float rotationRate = 0.01;
+
 };
