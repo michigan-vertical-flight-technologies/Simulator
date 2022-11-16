@@ -63,7 +63,7 @@ void ADrone::Tick(float DeltaTime)
 	auto dronePos = GetActorLocation();
 	for (auto part : allParts) {
 		collision->AddForce(part->CalcForces());
-		collision->AddTorque(part->CalcTorques(dronePos));
+		collision->AddTorqueInRadians(part->CalcTorques(dronePos));
 		totalMassKg += part->massKg;
 	}
 	collision->SetMassOverrideInKg(NAME_None, totalMassKg);
