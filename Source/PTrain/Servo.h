@@ -31,5 +31,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Servo Parameters")
 		float rotationRate = 0.01;
-
 };
