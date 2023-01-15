@@ -26,7 +26,7 @@ To configure a CAEN machine to use the simulator in-editor, follow these instruc
 4. Run `genvs.bat` in the repository root folder. This will generate a Visual Studio solution file.
 5. Open the generated `PTrain.sln` in the repository root folder.
 6. In the solution explorer, right-click PTrain and select "Set as Startup Project"
-7. In the top toolbar, select `DebugGame`
+7. In the top toolbar, select `DebugGame Editor`
 8. Press the green play button labeled Local Windows Debugger. This will compile the project and launch Unreal.
 
 To configure on a personal computer:
