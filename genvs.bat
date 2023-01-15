@@ -1,0 +1,1 @@
+"C:\Program Files\Epic Games\UE_4.26\Engine\Binaries\DotNET\UnrealBuildTool.exe" -Project="%cd%\PTrain.uproject" -NoEngineChanges -ProjectFiles

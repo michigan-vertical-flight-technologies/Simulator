@@ -1,4 +1,4 @@
-# PTrain
+# MVFT Aircraft Simulator
 
 This is the main source repository for the MVFT realtime aircraft simulator for use in prototyping and pilot training. 
 
@@ -12,7 +12,9 @@ To configure a CAEN machine to use the simulator in-editor, follow these instruc
 3. Use TortoiseGit to clone this repository (enable Depth 1 to avoid downloading the entire history) __into your Downloads folder__. This is very important, because it is not networked. If you try to open the project from your home folder, it will probably error while filling up your network quota.
     - because of this, you must commit and push all changes you make before logging out, otherwise you may lose your work.
     - ![TortoiseGit](https://user-images.githubusercontent.com/55766810/193943765-d771fc12-c610-43bd-a685-58a3091e3165.png)
-4. Run `openall.bat` in the repository root folder. This will launch SteamVR (or skip if that is not installed) and Unreal. You can open SteamVR and Unreal manually by following these instructions:
+
+### For Pilots and Users
+4. Run `openeditor.bat` and `opensteamvr.bat` in the repository root folder. This will launch SteamVR (or skip if that is not installed) and Unreal. You can open SteamVR and Unreal manually by following these instructions:
     1. Launch SteamVR by going to `C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64` and opening `vrstartup.exe`. SteamVR may take you through the room configuration. Follow the on-screen prompts for room-size VR. 
     2. Open the PTrainer repository folder in Explorer and right-click `PTrain.uproject`, then select Open With, select Choose an App from this PC, then navigate to `C:\Program Files\Epic Games\UE_4.26\Engine\Binaries\Win64\UE4_Editor.exe`
 5. On first-time launch, Unreal should ask to compile content, press Yes, then that should complete and the editor window should appear.
@@ -20,6 +22,13 @@ To configure a CAEN machine to use the simulator in-editor, follow these instruc
     - It will take around 20 minutes for Unreal to first-time launch on a CAEN computer, so if it looks stuck, it's not, just give it some time (subsequent launches on the same machine will be much faster)
 6. To run in VR, select the dropdown menu next to Play, and select VR Preview. SteamVR needs to be running (and have been launched before Unreal). It will launch a separate window. To exit, press the escape key or alt-tab to the Unreal window.
     
+### For Developers
+4. Run `genvs.bat` in the repository root folder. This will generate a Visual Studio solution file.
+5. Open the generated `PTrain.sln` in the repository root folder.
+6. In the solution explorer, right-click PTrain and select "Set as Startup Project"
+7. In the top toolbar, select `DebugGame`
+8. Press the green play button labeled Local Windows Debugger. This will compile the project and launch Unreal.
+
 To configure on a personal computer:
 1. Install prerequisites for your platform:
     - All: 
