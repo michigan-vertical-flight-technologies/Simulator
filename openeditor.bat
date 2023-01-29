@@ -1,1 +1,1 @@
-"C:\Program Files\Epic Games\UE_4.26\Engine\Binaries\Win64\UE4Editor.exe" "%cd%\PTrain.uproject"
+"C:\Program Files\Epic Games\UE_4.27\Engine\Binaries\Win64\UE4Editor.exe" "%cd%\PTrain.uproject"
