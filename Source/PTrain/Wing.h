@@ -16,14 +16,9 @@ class PTRAIN_API AWing : public AStaticPart
 
 public:
 	virtual FVector CalcForces() override;
-	virtual FVector CalcTorques(const FVector&) override;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wing Parameters")
-		float WingResistance = 10;
+	virtual FVector CalcTorques() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wing Parameters")
-		float ForwardResistance = 10;
+	UPROPERTY(EditAnywhere, Category = "Wing Data")
+		class UDataTable* liftDragByAlpha;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wing Parameters")
-		float LiftScaleFactor = 100;
 };

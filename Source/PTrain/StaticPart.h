@@ -44,16 +44,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	/**
-	@return the forces to apply to the base, override in subclasses
+	@return the forces to apply to the base, in world space, override in subclasses
 	*/
 	virtual FVector CalcForces() {
 		return FVector(0,0,0);
 	}
 
 	/**
-	@return the torques to apply to the base, override in subclasses
+	@return the torques to apply to the base, in world space, override in subclasses
 	*/
-	virtual FVector CalcTorques(const FVector& droneRootPos) {
+	virtual FVector CalcTorques() {
 		return FVector(0, 0, 0);
 	}
 

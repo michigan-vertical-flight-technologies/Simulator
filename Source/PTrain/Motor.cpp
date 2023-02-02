@@ -28,6 +28,11 @@ void AMotor::BeginPlay()
 	}
 }
 
+FVector AMotor::CalcTorques() {
+	float torqueAtPowerLeveL = 0;
+	return FVector{ 0,0, 1 } *torqueAtPowerLeveL;	//TODO: look up in a table the power level [0,1] given current RPM
+}
+
 // Called every frame
 void AMotor::Tick(float DeltaTime)
 {

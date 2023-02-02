@@ -4,6 +4,7 @@
 #include "Wing.h"
 
 FVector AWing::CalcForces() {
+	/*
 	// lift
 	FVector totalForce(0, 0, 0);
 	auto upVec = WorldUpVector();
@@ -23,9 +24,11 @@ FVector AWing::CalcForces() {
 	dragVec = drag * (-WorldForwardVector());
 
 	return totalForce;
+	*/
+	return FVector{ 0,0,0 };
 }
 
-FVector AWing::CalcTorques(const FVector&) {
+FVector AWing::CalcTorques() {
 	// angular drag - yaw
 
 	return FVector(0, 0, 0);

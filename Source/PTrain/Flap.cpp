@@ -7,6 +7,6 @@ FVector AFlap::CalcForces() {
 	return FVector(0, 0, 0);
 }
 
-FVector AFlap::CalcTorques(const FVector&) {
+FVector AFlap::CalcTorques() {
 	return FVector(0, 0, 0);
 }

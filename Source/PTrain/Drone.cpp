@@ -34,6 +34,9 @@ void ADrone::BeginPlay()
 			activeFlightController = controller;
 			break;
 		}
+		else if (auto motor = Cast<AMotor>(actor)) {
+			allMotors.Add(motor);
+		}
 	}
 	// drone must have a flight controller!
 	check(activeFlightController != nullptr);
@@ -57,15 +60,42 @@ void ADrone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// get the transformation matrix that represents the transformation from the child to the parent
+	auto getChildTransformationMatrixInSpaceOf = [](AActor* child, AActor* parent) {
+		auto result = child->GetActorTransform().GetRelativeTransform(parent->GetTransform());
+		return result.Inverse();
+
+		/*
+		// recurse from child up the hierarchy to Parent
+		auto result = child->GetActorTransform().ToMatrixWithScale();
+
+		for (auto p = child->GetParentActor(); p != nullptr; p = p->GetParentActor()) {
+			result = p->GetActorTransform().ToMatrixWithScale() * result;
+		}
+
+		return result.Inverse();*/
+	};
+
 	float totalMassKg = 0;
 	// grab all the forces and torques
 	// apply it to the craft
 	auto dronePos = GetActorLocation();
 	for (auto part : allParts) {
-		collision->AddForce(part->CalcForces());
-		collision->AddTorque(part->CalcTorques(dronePos));
+		// forces originate from the part. Need to transform them when applying them to the root of the drone
+		auto partPositionInDroneSpace = dronePos - part->GetActorLocation();
+		auto partForce = part->CalcForces();
+		collision->AddForce(partForce);
+		collision->AddTorque(FVector::CrossProduct(partForce, partPositionInDroneSpace));	// an off-center force creates a torque
+		auto partLocalSpaceTorque = part->CalcTorques();
+
+		collision->AddTorque(getChildTransformationMatrixInSpaceOf(part,this).TransformVector(partPositionInDroneSpace));
 		totalMassKg += part->massKg;
 	}
+	// get motor torques
+	for (auto motor : allMotors) {
+		collision->AddTorque(getChildTransformationMatrixInSpaceOf(motor,this).TransformVector(motor->CalcTorques()));
+	}
+
 	collision->SetMassOverrideInKg(NAME_None, totalMassKg);
 
 #if 0

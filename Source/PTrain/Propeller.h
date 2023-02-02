@@ -18,10 +18,10 @@ private:
 	float currentRotationSpeed = 0;	// rotation speed is a float from 0 to 1, where 0 is off and 1 is the maximum speed
 public:
 	virtual FVector CalcForces() override;
-	virtual FVector CalcTorques(const FVector& droneRootPos) override;
+	virtual FVector CalcTorques() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Propeller Parameters")
-		float PowerFactor = 10;
+	UPROPERTY(EditAnywhere, Category = "Propeller Data")
+		class UDataTable* thrustLookupTable;
 
 	virtual void Tick(float DeltaTime) override {
 		AddActorLocalRotation(FRotator(0, 20, 0) * currentRotationSpeed);

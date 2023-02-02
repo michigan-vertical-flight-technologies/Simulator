@@ -7,12 +7,10 @@
 
 FVector APropeller::CalcForces() {
 	auto upVec = WorldUpVector();
-	return ForceScaleFactor * PowerFactor * (currentRotationSpeed * upVec);
+	return ForceScaleFactor * 1 * (currentRotationSpeed * upVec);
 }
 
-FVector APropeller::CalcTorques(const FVector& droneRootPos) {
-	auto worldPos = WorldLocation();
-	auto localSpace = droneRootPos - worldPos;
-	auto upVec = WorldUpVector();
-	return FVector::CrossProduct(localSpace, currentRotationSpeed * upVec) * ForceScaleFactor;
+FVector APropeller::CalcTorques() {
+
+	return FVector{ 0,0,0 };	//TODO: see math doc for propeller torque
 }

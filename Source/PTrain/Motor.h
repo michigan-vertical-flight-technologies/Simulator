@@ -21,8 +21,14 @@ protected:
 	virtual void BeginPlay() override;
 	APropeller* childPropeller = nullptr;
 public:	
+
+	UPROPERTY(EditAnywhere, Category = "Motor Data")
+		class UDataTable* torqueByPowerLookupTable;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void PropagateSpeed(float powerLevel);
+
+	virtual FVector CalcTorques();
 };

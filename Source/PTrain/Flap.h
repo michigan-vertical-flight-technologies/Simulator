@@ -15,5 +15,5 @@ class PTRAIN_API AFlap : public AStaticPart
 	GENERATED_BODY()
 public:
 	virtual FVector CalcForces() override;
-	virtual FVector CalcTorques(const FVector&) override;
+	virtual FVector CalcTorques() override;
 };
