@@ -60,10 +60,13 @@ void ADrone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// get the transformation matrix that represents the transformation from the child to the parent
 	auto getChildTransformationMatrixInSpaceOf = [](AActor* child, AActor* parent) {
-		auto result = child->GetActorTransform().GetRelativeTransform(parent->GetTransform());
-		return result.Inverse();
+		return child->GetActorTransform().GetRelativeTransform(parent->GetTransform());
+	};
+
+	// get the transformation matrix that represents the transformation from the child to the parent
+	auto getChildTransformationMatrixInverseInSpaceOf = [&](AActor* child, AActor* parent) {
+		return getChildTransformationMatrixInSpaceOf(child,parent).Inverse();
 
 		/*
 		// recurse from child up the hierarchy to Parent
@@ -76,6 +79,7 @@ void ADrone::Tick(float DeltaTime)
 		return result.Inverse();*/
 	};
 
+
 	float totalMassKg = 0;
 	// grab all the forces and torques
 	// apply it to the craft
@@ -84,16 +88,19 @@ void ADrone::Tick(float DeltaTime)
 		// forces originate from the part. Need to transform them when applying them to the root of the drone
 		auto partPositionInDroneSpace = dronePos - part->GetActorLocation();
 		auto partForce = part->CalcForces();
-		collision->AddForce(partForce);
-		collision->AddTorque(FVector::CrossProduct(partForce, partPositionInDroneSpace));	// an off-center force creates a torque
+		auto droneSpaceForce = getChildTransformationMatrixInverseInSpaceOf(part, this).TransformVector(partForce);
+		collision->AddForce(droneSpaceForce);
+		collision->AddTorque(FVector::CrossProduct(droneSpaceForce, partPositionInDroneSpace));	// an off-center force creates a torque
 		auto partLocalSpaceTorque = part->CalcTorques();
 
-		collision->AddTorque(getChildTransformationMatrixInSpaceOf(part,this).TransformVector(partPositionInDroneSpace));
+		// part-local torques
+		auto partTorque = part->CalcTorques();
+		collision->AddTorque(getChildTransformationMatrixInverseInSpaceOf(part,this).TransformVector(partTorque));
 		totalMassKg += part->massKg;
 	}
 	// get motor torques
 	for (auto motor : allMotors) {
-		collision->AddTorque(getChildTransformationMatrixInSpaceOf(motor,this).TransformVector(motor->CalcTorques()));
+		collision->AddTorque(getChildTransformationMatrixInverseInSpaceOf(motor,this).TransformVector(motor->CalcTorques()));
 	}
 
 	collision->SetMassOverrideInKg(NAME_None, totalMassKg);

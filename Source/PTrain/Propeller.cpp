@@ -6,7 +6,7 @@
 // read from RotationSpeed...
 
 FVector APropeller::CalcForces() {
-	auto upVec = WorldUpVector();
+	auto upVec = PartUpVector();
 	return ForceScaleFactor * 1 * (currentRotationSpeed * upVec);
 }
 
