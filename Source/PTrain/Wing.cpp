@@ -3,33 +3,57 @@
 
 #include "Wing.h"
 
+constexpr static float constantOfDrag = 0.0f;	// TODO: a constant based on a flat plate
+
+template<typename T>
+float liftEq(float C_L, T droneVelocityInPartSpace, float ro, float wingArea) {
+	// the lift equation
+	// "Size" is vector Magnitude, because Unreal could not name it something normal
+	return (powf((C_L * ro * droneVelocityInPartSpace).Size(), 2) / 2) * wingArea;
+}
+
+float AWing::Falpha(float alpha) {
+	//TODO: lookup in data table
+	return 0;
+}
+
+// the result should be applied as a vector perpendicular to the drone's velocity vector
+// only use this function if the drone is flying forward
+float AWing::CalcLiftForward() {
+	FVector droneVelocityInPartSpace = LocalSpaceVelocityVector();
+
+	float angleOfAttack = 0;	// TODO: calculate angle of attack (normalize(drone velocity part space) dot PartForward)
+
+	FVector2D dv_xz{ droneVelocityInPartSpace.X, droneVelocityInPartSpace.Z };
+	return liftEq(Falpha(angleOfAttack),dv_xz, ro, wingArea);
+}
+
+// apply this as a negative multiplicand of (drone velocity part space)
+float AWing::CalcDragInline()
+{
+	FVector droneVelocityInPartSpace = LocalSpaceVelocityVector();
+	FVector2D dv_xz{ droneVelocityInPartSpace.X, droneVelocityInPartSpace.Z };
+
+	return liftEq(constantOfDrag,dv_xz, ro, wingArea);
+}
+
+FVector AWing::CalcDrag()
+{
+	auto droneVelociytPartSpace = LocalSpaceVelocityVector();
+	droneVelociytPartSpace.Normalize();
+
+	return liftEq(constantOfDrag, FVector2D{ droneVelociytPartSpace.Z,0 }, ro, wingArea) * -droneVelociytPartSpace;
+}
+
+
 FVector AWing::CalcForces() {
-	/*
-	// lift
-	FVector totalForce(0, 0, 0);
-	auto upVec = WorldUpVector();
-	upVec.Normalize();
-	auto cosTheta = FVector::DotProduct(upVec, FVector(0, 0, 1));
-	auto localVelVec = LocalSpaceVelocityVector();
-	auto forwardVel = UKismetMathLibrary::Abs(localVelVec.X);
-	totalForce += (cosTheta * forwardVel) * upVec * LiftScaleFactor;
 
-	// Drag - perpendicular
-	auto drag = FVector::DotProduct(localVelVec, FVector(0.0f, 0.0f, 1.0f)) * WingResistance;
-	auto dragVec = drag * (-WorldUpVector());
-	totalForce += dragVec;
+	//TODO: call above functions
 
-	// drag - parallel
-	drag = FVector::DotProduct(localVelVec, FVector(1.0f, 0.0f, 0.0f)) * ForwardResistance;
-	dragVec = drag * (-WorldForwardVector());
-
-	return totalForce;
-	*/
 	return FVector{ 0,0,0 };
 }
 
 FVector AWing::CalcTorques() {
-	// angular drag - yaw
 
 	return FVector(0, 0, 0);
 }

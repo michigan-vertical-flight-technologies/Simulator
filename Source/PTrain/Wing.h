@@ -13,7 +13,11 @@ UCLASS()
 class PTRAIN_API AWing : public AStaticPart
 {
 	GENERATED_BODY()
-
+protected:
+	float CalcLiftForward();
+	float CalcDragInline();
+	FVector CalcDrag();
+	float Falpha(float alpha);
 public:
 	virtual FVector CalcForces() override;
 	virtual FVector CalcTorques() override;
@@ -21,4 +25,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
 		class UDataTable* liftDragByAlpha;
 
+	UPROPERTY(EditAnywhere, Category = "Wing Data")
+		float ro = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Wing Data")
+		float wingArea = 0;
 };
