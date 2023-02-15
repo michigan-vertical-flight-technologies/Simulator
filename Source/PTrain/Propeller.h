@@ -16,6 +16,8 @@ class PTRAIN_API APropeller : public AStaticPart
 
 private:
 	float currentRotationSpeed = 0;	// rotation speed is a float from 0 to 1, where 0 is off and 1 is the maximum speed
+	FVector prevTickAngularMomentum = FVector{ 0,0,0 };
+	float prevTickTime = 0;
 public:
 	virtual FVector CalcForces() override;
 	virtual FVector CalcTorques() override;
@@ -23,9 +25,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Propeller Data")
 		class UDataTable* thrustLookupTable;
 
-	virtual void Tick(float DeltaTime) override {
-		AddActorLocalRotation(FRotator(0, 20, 0) * currentRotationSpeed);
-	}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Propeller Parameters")
+		float momentOfInertia = 0;
+
+	virtual void Tick(float DeltaTime) override;
 	
 	// invoked by connected Motors
 	void SetRotationSpeed(decltype(currentRotationSpeed) r) { currentRotationSpeed = r; }

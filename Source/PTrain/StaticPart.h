@@ -36,6 +36,13 @@ protected:
 		auto parent = GetParentComponent();
 		return UKismetMathLibrary::InverseTransformDirection(parent->GetComponentTransform(), parent->GetComponentVelocity());
 	}
+	FVector LocalSpaceAngularVelocityVector() {
+		auto parent = Cast<UPrimitiveComponent>(GetParentComponent());
+		if (parent) {
+			return UKismetMathLibrary::InverseTransformDirection(parent->GetComponentTransform(), parent->GetPhysicsAngularVelocityInRadians());
+		}
+		return FVector{ 0,0,0 };
+	}
 
 	FVector PartUpVector() {
 		return FVector{ 0,0,1 };
