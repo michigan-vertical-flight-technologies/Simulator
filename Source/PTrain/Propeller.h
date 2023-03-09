@@ -34,7 +34,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	float getCurrentRPM();
-	void getThrustForRPM(float rpm);
+	float getThrustForRPM(float rpm);
 	
 	// invoked by connected Motors
 	void SetRotationSpeed(decltype(currentRotationSpeed) r) { currentRotationSpeed = r; }
