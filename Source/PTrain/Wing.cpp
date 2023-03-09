@@ -21,8 +21,16 @@ float AWing::Falpha(float alpha) {
 // only use this function if the drone is flying forward
 float AWing::CalcLiftForward() {
 	FVector droneVelocityInPartSpace = LocalSpaceVelocityVector();
+	// if the local forward vector has negative magnitude, then the wing is not moving forward
+	// so we do not want to calculate further
+	if ((droneVelocityInPartSpace * PartForwardVector()).Size() < 0) {
+		return 0;
+	}
 
-	float angleOfAttack = 0;	// TODO: calculate angle of attack (normalize(drone velocity part space) dot PartForward)
+	// calculate angle of attack
+	// normalize(drone velocity part space) dot PartForward
+	droneVelocityInPartSpace.Normalize();
+	float angleOfAttack = FVector::DotProduct(droneVelocityInPartSpace, PartForwardVector());
 
 	FVector2D dv_xz{ droneVelocityInPartSpace.X, droneVelocityInPartSpace.Z };
 	return liftEq(Falpha(angleOfAttack),dv_xz, ro, wingArea);
@@ -31,6 +39,12 @@ float AWing::CalcLiftForward() {
 // apply this as a negative multiplicand of (drone velocity part space)
 float AWing::CalcDragInline()
 {
+	// if the local forward vector has negative magnitude, then the wing is not moving forward
+	// so we do not want to calculate further
+	if ((LocalSpaceVelocityVector() * PartForwardVector()).Size() < 0) {
+		return 0;
+	}
+
 	FVector droneVelocityInPartSpace = LocalSpaceVelocityVector();
 	FVector2D dv_xz{ droneVelocityInPartSpace.X, droneVelocityInPartSpace.Z };
 
@@ -48,9 +62,15 @@ FVector AWing::CalcDrag()
 
 FVector AWing::CalcForces() {
 
-	//TODO: call above functions
+	//these are in world space, we need them in part space
+	auto liftForward = CalcLiftForward();
+	auto inlinedrag = CalcDragInline();
+	auto otherDrag = CalcDrag();
+	auto worldSpaceForces = otherDrag + (-1 * PartForwardVector() * inlinedrag) + (PartUpVector() * liftForward);
 
-	return FVector{ 0,0,0 };
+	auto localSpace = GetActorTransform().TransformVector(worldSpaceForces);
+
+	return localSpace;
 }
 
 FVector AWing::CalcTorques() {
