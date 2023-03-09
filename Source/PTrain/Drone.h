@@ -32,6 +32,7 @@ protected:
 	FVector startPos;
 
 	TArray<AStaticPart*> allParts;
+	TArray<AMotor*> allMotors;
 
 public:	
 	// Called every frame

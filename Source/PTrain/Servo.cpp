@@ -24,7 +24,6 @@ void AServo::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	auto rotation = GetParentComponent()->GetRelativeRotation();
 	auto currentZ = rotation.Yaw;
-	UE_LOG(LogTemp, Warning, TEXT("%f -> %f"), currentZ,targetPos);
 	auto newZ = FMath::Lerp(currentZ, targetPos, rotationRate);
 	rotation.Yaw = newZ;
 	GetParentComponent()->SetRelativeRotation(rotation);

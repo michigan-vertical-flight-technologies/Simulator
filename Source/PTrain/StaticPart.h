@@ -36,6 +36,23 @@ protected:
 		auto parent = GetParentComponent();
 		return UKismetMathLibrary::InverseTransformDirection(parent->GetComponentTransform(), parent->GetComponentVelocity());
 	}
+	FVector LocalSpaceAngularVelocityVector() {
+		auto parent = Cast<UPrimitiveComponent>(GetParentComponent());
+		if (parent) {
+			return UKismetMathLibrary::InverseTransformDirection(parent->GetComponentTransform(), parent->GetPhysicsAngularVelocityInRadians());
+		}
+		return FVector{ 0,0,0 };
+	}
+
+	FVector PartUpVector() {
+		return FVector{ 0,0,1 };
+	}
+	FVector PartRightVector() {
+		return FVector{ 0,1,0 };
+	}
+	FVector PartForwardVector() {
+		return FVector{ 1,0,0 };
+	}
 
 	static constexpr float ForceScaleFactor = 10000;
 
@@ -44,16 +61,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	/**
-	@return the forces to apply to the base, override in subclasses
+	@return the forces to apply to the base, in part-local space, override in subclasses
 	*/
 	virtual FVector CalcForces() {
 		return FVector(0,0,0);
 	}
 
 	/**
-	@return the torques to apply to the base, override in subclasses
+	@return the torques to apply to the base, in part-local space, override in subclasses
 	*/
-	virtual FVector CalcTorques(const FVector& droneRootPos) {
+	virtual FVector CalcTorques() {
 		return FVector(0, 0, 0);
 	}
 
