@@ -8,7 +8,7 @@
 
 FVector APropeller::CalcForces() {
 	auto upVec = PartUpVector();
-	return ForceScaleFactor * 1 * (currentRotationSpeed * upVec);
+	return ForceScaleFactor * getThrustForRPM(getCurrentRPM()) * upVec;
 }
 
 FVector APropeller::CalcTorques() {
@@ -25,4 +25,15 @@ void APropeller::Tick(float DeltaTime)
 		prevTickTime = UGameplayStatics::GetRealTimeSeconds(GetWorld());
 	}
 	AddActorLocalRotation(FRotator(0, 20, 0) * currentRotationSpeed);
+}
+
+float APropeller::getCurrentRPM()
+{
+	return currentRotationSpeed * maximumRPM;
+}
+
+float APropeller::getThrustForRPM(float rpm)
+{
+	// TODO: lookup in LUT
+	return 0;
 }

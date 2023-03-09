@@ -28,7 +28,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Propeller Parameters")
 		float momentOfInertia = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Propeller Parameters")
+		float maximumRPM = 0;
+
 	virtual void Tick(float DeltaTime) override;
+
+	float getCurrentRPM();
+	void getThrustForRPM(float rpm);
 	
 	// invoked by connected Motors
 	void SetRotationSpeed(decltype(currentRotationSpeed) r) { currentRotationSpeed = r; }
