@@ -30,4 +30,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
 		float wingArea = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Wing Data")
+		float wingLength = 0;
 };

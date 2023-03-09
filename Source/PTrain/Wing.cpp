@@ -74,6 +74,15 @@ FVector AWing::CalcForces() {
 }
 
 FVector AWing::CalcTorques() {
+	// only apply this if the wing is actively rotating
+	auto localAngularVelocity = LocalSpaceAngularVelocityVector();
+	if (localAngularVelocity.Size() < 0.1f) {
+		FVector(0, 0, 0);
+	}
+
+	const auto inputForceLocation = (3.f / 4) * wingLength;
+
+	// TODO: implement...
 
 	return FVector(0, 0, 0);
 }
