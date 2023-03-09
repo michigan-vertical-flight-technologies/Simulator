@@ -23,7 +23,7 @@ float AWing::CalcLiftForward() {
 	FVector droneVelocityInPartSpace = LocalSpaceVelocityVector();
 	// if the local forward vector has negative magnitude, then the wing is not moving forward
 	// so we do not want to calculate further
-	if ((droneVelocityInPartSpace * PartForwardVector()).Size() < 0) {
+	if (FVector::DotProduct(droneVelocityInPartSpace, PartForwardVector()) < 0) {
 		return 0;
 	}
 
@@ -41,7 +41,7 @@ float AWing::CalcDragInline()
 {
 	// if the local forward vector has negative magnitude, then the wing is not moving forward
 	// so we do not want to calculate further
-	if ((LocalSpaceVelocityVector() * PartForwardVector()).Size() < 0) {
+	if (FVector::DotProduct(LocalSpaceVelocityVector() * PartForwardVector()) < 0) {
 		return 0;
 	}
 
