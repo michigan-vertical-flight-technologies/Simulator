@@ -90,17 +90,17 @@ void ADrone::Tick(float DeltaTime)
 		auto partForce = part->CalcForces();
 		auto droneSpaceForce = getChildTransformationMatrixInverseInSpaceOf(part, this).TransformVector(partForce);
 		collision->AddForce(droneSpaceForce);
-		collision->AddTorque(FVector::CrossProduct(droneSpaceForce, partPositionInDroneSpace));	// an off-center force creates a torque
+		collision->AddTorqueInRadians(FVector::CrossProduct(droneSpaceForce, partPositionInDroneSpace));	// an off-center force creates a torque
 		auto partLocalSpaceTorque = part->CalcTorques();
 
 		// part-local torques
 		auto partTorque = part->CalcTorques();
-		collision->AddTorque(getChildTransformationMatrixInverseInSpaceOf(part,this).TransformVector(partTorque));
+		collision->AddTorqueInRadians(getChildTransformationMatrixInverseInSpaceOf(part,this).TransformVector(partTorque));
 		totalMassKg += part->massKg;
 	}
 	// get motor torques
 	for (auto motor : allMotors) {
-		collision->AddTorque(getChildTransformationMatrixInverseInSpaceOf(motor,this).TransformVector(motor->CalcTorques()));
+		collision->AddTorqueInRadians(getChildTransformationMatrixInverseInSpaceOf(motor,this).TransformVector(motor->CalcTorques()));
 	}
 
 	collision->SetMassOverrideInKg(NAME_None, totalMassKg);
