@@ -23,7 +23,7 @@ public:
 	virtual FVector CalcTorques() override;
 
 	UPROPERTY(EditAnywhere, Category = "Propeller Data")
-		class UDataTable* thrustLookupTable;
+		class UCurveTable* thrustLookupTable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Propeller Parameters")
 		float momentOfInertia = 0;

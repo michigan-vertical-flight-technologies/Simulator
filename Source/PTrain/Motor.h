@@ -23,7 +23,7 @@ protected:
 public:	
 
 	UPROPERTY(EditAnywhere, Category = "Motor Data")
-		class UDataTable* torqueByPowerLookupTable;
+		class UCurveTable* torqueByPowerLookupTable;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

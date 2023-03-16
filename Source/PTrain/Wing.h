@@ -23,7 +23,7 @@ public:
 	virtual FVector CalcTorques() override;
 
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
-		class UDataTable* liftDragByAlpha;
+		class UCurveTable* liftDragByAlpha;
 
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
 		float ro = 0;
