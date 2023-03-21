@@ -27,6 +27,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Motor Data")
 		class UCurveTable* torqueByPowerLookupTable;
 
+	UPROPERTY(EditAnywhere, Category = "Motor Data")
+		bool clockWise = false;
+
 	virtual void PropagateSpeed(float powerLevel);
 
 	virtual FVector CalcTorques();

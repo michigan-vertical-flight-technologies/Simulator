@@ -36,4 +36,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
 		float wingLength = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Wing Data")
+		bool wingExtendsAlongPositiveY = true;
 };

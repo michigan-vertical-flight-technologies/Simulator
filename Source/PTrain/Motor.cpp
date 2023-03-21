@@ -38,7 +38,7 @@ void AMotor::BeginPlay()
 
 FVector AMotor::CalcTorques() {
 	auto torqueAtPowerLeveL = torqueByPowerCurve->Eval(currentPowerLevel); // look up in a table the torque given current power level [0,1] 
-	return FVector{ 0,0, 1 } *torqueAtPowerLeveL;
+	return FVector{ 0,0, 1 } * torqueAtPowerLeveL * (clockWise ? -1 : 1);
 }
 
 void AMotor::PropagateSpeed(float power) {
