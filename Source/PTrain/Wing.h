@@ -18,9 +18,12 @@ protected:
 	float CalcDragInline();
 	FVector CalcDrag();
 	float Falpha(float alpha);
+	FSimpleCurve* liftByAlpha = nullptr;
 public:
 	virtual FVector CalcForces() override;
 	virtual FVector CalcTorques() override;
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
 		class UCurveTable* liftDragByAlpha;

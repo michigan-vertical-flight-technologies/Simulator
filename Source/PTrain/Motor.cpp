@@ -4,7 +4,7 @@
 #include "Motor.h"
 #include <cassert>
 #include "Engine/CurveTable.h"
-constexpr auto DATA_MOTORTORQUE_NAME = "Motor.TorqueByPower";
+#include "Constants.h"
 
 // Sets default values
 AMotor::AMotor()

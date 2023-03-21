@@ -4,8 +4,8 @@
 #include "Propeller.h"
 #include <Kismet/GameplayStatics.h>
 #include "Engine/CurveTable.h"
+#include "Constants.h"
 
-constexpr auto DATA_RPMTHRUST_NAME = "Prop.ThrustByRPM";
 
 // read from RotationSpeed...
 

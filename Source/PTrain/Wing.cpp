@@ -2,6 +2,10 @@
 
 
 #include "Wing.h"
+#include "Engine/CurveTable.h"
+#include "Constants.h"
+
+
 
 constexpr static float constantOfDrag = 0.0f;	// TODO: a constant based on a flat plate
 
@@ -13,8 +17,9 @@ float liftEq(float C_L, T droneVelocityInPartSpace, float ro, float wingArea) {
 }
 
 float AWing::Falpha(float alpha) {
-	//TODO: lookup in data table
-	return 0;
+	auto lift = liftByAlpha->Eval(alpha);
+
+	return lift;
 }
 
 // the result should be applied as a vector perpendicular to the drone's velocity vector
@@ -85,4 +90,18 @@ FVector AWing::CalcTorques() {
 	// TODO: implement...
 
 	return FVector(0, 0, 0);
+}
+
+void AWing::BeginPlay()
+{
+	Super::BeginPlay();
+
+	auto initCurvePtr = [this](FSimpleCurve*& curve, const char* name) {
+		curve = liftDragByAlpha->FindSimpleCurve(name, "", true);
+		if (!curve) {
+			UE_LOG(LogTemp, Error, TEXT("Propeller curve table does not have %s"), name);
+		}
+	};
+
+	initCurvePtr(liftByAlpha, DATA_WINGLIFT_NAME);
 }
