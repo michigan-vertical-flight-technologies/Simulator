@@ -37,7 +37,7 @@ public:
 	float getCurrentRPM();
 	float getThrustForRPM(float rpm);
 
-	void BeginPlay();
+	virtual void BeginPlay() override;
 	
 	// invoked by connected Motors
 	void SetRotationSpeed(decltype(currentRotationSpeed) r) { currentRotationSpeed = r; }

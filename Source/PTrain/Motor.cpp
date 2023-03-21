@@ -3,6 +3,8 @@
 
 #include "Motor.h"
 #include <cassert>
+#include "Engine/CurveTable.h"
+constexpr auto DATA_MOTORTORQUE_NAME = "Motor.TorqueByPower";
 
 // Sets default values
 AMotor::AMotor()
@@ -26,21 +28,21 @@ void AMotor::BeginPlay()
 			childPropeller = Cast<APropeller>(ptr->GetChildActor());
 		}
 	}
+
+	// get the curve data
+	torqueByPowerCurve = torqueByPowerLookupTable->FindSimpleCurve(DATA_MOTORTORQUE_NAME, "", true);
+	if (!torqueByPowerCurve) {
+		UE_LOG(LogTemp, Error, TEXT("Propeller curve table does not have %s"), DATA_MOTORTORQUE_NAME);
+	}
 }
 
 FVector AMotor::CalcTorques() {
-	float torqueAtPowerLeveL = 0;
-	return FVector{ 0,0, 1 } *torqueAtPowerLeveL;	//TODO: look up in a table the torque given current power level [0,1] 
-}
-
-// Called every frame
-void AMotor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	auto torqueAtPowerLeveL = torqueByPowerCurve->Eval(currentPowerLevel); // look up in a table the torque given current power level [0,1] 
+	return FVector{ 0,0, 1 } *torqueAtPowerLeveL;
 }
 
 void AMotor::PropagateSpeed(float power) {
 	assert(childPropeller != nullptr);
-	childPropeller->SetRotationSpeed(power);		// TODO: make motors configurable
+	currentPowerLevel = power;
+	childPropeller->SetRotationSpeed(currentPowerLevel);		// TODO: make motors configurable
 }

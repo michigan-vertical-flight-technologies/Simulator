@@ -34,15 +34,13 @@ void ADrone::BeginPlay()
 			activeFlightController = controller;
 			break;
 		}
-		else if (auto motor = Cast<AMotor>(actor)) {
-			allMotors.Add(motor);
-		}
 	}
 	// drone must have a flight controller!
 	check(activeFlightController != nullptr);
 
 	for (const auto actor : allChildren) {
 		if (auto motor = Cast<AMotor>(actor)) {
+			allMotors.Add(motor);
 			activeFlightController->RegisterMotor(motor);
 		}
 		else if (auto staticPart = Cast<AStaticPart>(actor)) {
@@ -100,7 +98,8 @@ void ADrone::Tick(float DeltaTime)
 	}
 	// get motor torques
 	for (auto motor : allMotors) {
-		collision->AddTorqueInRadians(getChildTransformationMatrixInverseInSpaceOf(motor,this).TransformVector(motor->CalcTorques()));
+		auto motortorque = motor->CalcTorques();
+		collision->AddTorqueInRadians(getChildTransformationMatrixInverseInSpaceOf(motor,this).TransformVector(motortorque));
 	}
 
 	collision->SetMassOverrideInKg(NAME_None, totalMassKg);
