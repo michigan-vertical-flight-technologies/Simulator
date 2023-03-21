@@ -3,6 +3,9 @@
 
 #include "Propeller.h"
 #include <Kismet/GameplayStatics.h>
+#include "Engine/CurveTable.h"
+
+constexpr auto DATA_RPMTHRUST_NAME = "Prop.ThrustByRPM";
 
 // read from RotationSpeed...
 
@@ -34,6 +37,15 @@ float APropeller::getCurrentRPM()
 
 float APropeller::getThrustForRPM(float rpm)
 {
-	// TODO: lookup in LUT
-	return 0;
+	auto value = thrustRPMCurve->Eval(rpm);
+	return value;
+}
+
+void APropeller::BeginPlay()
+{
+	Super::BeginPlay();
+	thrustRPMCurve = thrustLookupTable->FindSimpleCurve(DATA_RPMTHRUST_NAME, "", true);
+	if (!thrustRPMCurve) {
+		UE_LOG(LogTemp, Error, TEXT("Propeller curve table does not have %s"), DATA_RPMTHRUST_NAME);
+	}
 }

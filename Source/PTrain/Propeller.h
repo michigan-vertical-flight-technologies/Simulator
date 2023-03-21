@@ -18,6 +18,7 @@ private:
 	float currentRotationSpeed = 0;	// rotation speed is a float from 0 to 1, where 0 is off and 1 is the maximum speed
 	FVector prevTickAngularMomentum = FVector{ 0,0,0 };
 	float prevTickTime = 0;
+	FSimpleCurve* thrustRPMCurve = nullptr;
 public:
 	virtual FVector CalcForces() override;
 	virtual FVector CalcTorques() override;
@@ -35,6 +36,8 @@ public:
 
 	float getCurrentRPM();
 	float getThrustForRPM(float rpm);
+
+	void BeginPlay();
 	
 	// invoked by connected Motors
 	void SetRotationSpeed(decltype(currentRotationSpeed) r) { currentRotationSpeed = r; }
