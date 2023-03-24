@@ -18,12 +18,15 @@ protected:
 	float CalcDragInline();
 	FVector CalcDrag();
 	float Falpha(float alpha);
+	FSimpleCurve* liftByAlpha = nullptr;
 public:
 	virtual FVector CalcForces() override;
 	virtual FVector CalcTorques() override;
 
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
-		class UDataTable* liftDragByAlpha;
+		class UCurveTable* liftDragByAlpha;
 
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
 		float ro = 0;
@@ -33,4 +36,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Wing Data")
 		float wingLength = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Wing Data")
+		bool wingExtendsAlongPositiveY = true;
 };

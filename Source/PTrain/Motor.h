@@ -20,13 +20,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	APropeller* childPropeller = nullptr;
+	FSimpleCurve* torqueByPowerCurve = nullptr;
+	float currentPowerLevel = 0;
 public:	
 
 	UPROPERTY(EditAnywhere, Category = "Motor Data")
-		class UDataTable* torqueByPowerLookupTable;
+		class UCurveTable* torqueByPowerLookupTable;
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditAnywhere, Category = "Motor Data")
+		bool clockWise = false;
 
 	virtual void PropagateSpeed(float powerLevel);
 

@@ -18,12 +18,13 @@ private:
 	float currentRotationSpeed = 0;	// rotation speed is a float from 0 to 1, where 0 is off and 1 is the maximum speed
 	FVector prevTickAngularMomentum = FVector{ 0,0,0 };
 	float prevTickTime = 0;
+	FSimpleCurve* thrustRPMCurve = nullptr;
 public:
 	virtual FVector CalcForces() override;
 	virtual FVector CalcTorques() override;
 
 	UPROPERTY(EditAnywhere, Category = "Propeller Data")
-		class UDataTable* thrustLookupTable;
+		class UCurveTable* thrustLookupTable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Propeller Parameters")
 		float momentOfInertia = 0;
@@ -35,6 +36,8 @@ public:
 
 	float getCurrentRPM();
 	float getThrustForRPM(float rpm);
+
+	virtual void BeginPlay() override;
 	
 	// invoked by connected Motors
 	void SetRotationSpeed(decltype(currentRotationSpeed) r) { currentRotationSpeed = r; }
