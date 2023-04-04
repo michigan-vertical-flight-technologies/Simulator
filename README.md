@@ -34,7 +34,7 @@ To configure on a personal computer:
     - All: 
         - SteamVR (optional) (for VR support, note SteamVR does not support macOS)
         - [git-lfs](https://git-lfs.github.com/) (required for binary file locking)
-        - Unreal Engine __5.0.5__.
+        - Unreal Engine __5.0.3__.
     - macOS: Xcode
     - Windows: Visual Studio with Desktop Development for C++ module
 3. Clone using `git clone --depth=1`. If you did not install git-lfs, this will not work. 
