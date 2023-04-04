@@ -83,6 +83,22 @@ by providing a photo of your student ID when creating an educational account.
    - Import Textures: **false**
 6. To update your model in unreal after exporting a new version, right click the model in Assets and press Reimport.
 
+## Importing Data
+We use CSV files for data-driven parts of the simulator. An example CSV file is provided below:
+```
+Name,0,500,1000,2000,6000
+Prop.ThrustByRPM,0,30,40,60,100
+```
+The row is (name, x-values). The values afterward are the Y-values. All rows share X values.
+
+Once your CSV file has been created, drag it into the `DataB`P folder in the Unreal Editor and set the dialog properties like so:
+![CSV import settings](https://user-images.githubusercontent.com/55766810/229934963-62684739-73bf-417a-b793-f5064777fe95.png)
+
+Once imported, open the blueprint and the data should be visible.
+![Data blueprint preview](https://user-images.githubusercontent.com/55766810/229935025-690ce646-6f69-4faa-bf8f-640877978767.png)
+
+The imported blueprint will not automatically update to reflect changes made to the CSV. To manually resync, Right click -> Reimport.
+
 ## Usage In Editor
 - The `Arena20XX` Level files contains the simulated environments. Press Play to start the simulation
 
