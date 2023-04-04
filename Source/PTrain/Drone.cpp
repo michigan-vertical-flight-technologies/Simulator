@@ -9,7 +9,7 @@
 // Sets default values
 ADrone::ADrone()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	collision = CreateDefaultSubobject<UBoxComponent>("Collision");
@@ -64,7 +64,7 @@ void ADrone::Tick(float DeltaTime)
 
 	// get the transformation matrix that represents the transformation from the child to the parent
 	auto getChildTransformationMatrixInverseInSpaceOf = [&](AActor* child, AActor* parent) {
-		return getChildTransformationMatrixInSpaceOf(child,parent).Inverse();
+		return getChildTransformationMatrixInSpaceOf(child, parent).Inverse();
 
 		/*
 		// recurse from child up the hierarchy to Parent
@@ -93,7 +93,7 @@ void ADrone::Tick(float DeltaTime)
 
 		// part-local torques
 		auto partTorque = part->CalcTorques();
-		collision->AddTorqueInRadians(getChildTransformationMatrixInverseInSpaceOf(part,this).TransformVector(partTorque));
+		collision->AddTorqueInRadians(getChildTransformationMatrixInverseInSpaceOf(part, this).TransformVector(partTorque));
 		totalMassKg += part->massKg;
 	}
 	// get motor torques
@@ -109,7 +109,7 @@ void ADrone::Tick(float DeltaTime)
 	auto forwardVel = -localVelVec.X;
 
 	if (isHovering) {
-	
+
 	}
 	else {
 		// glide
@@ -122,7 +122,7 @@ void ADrone::Tick(float DeltaTime)
 		collision->AddForce(FrontVec * FLThrust);
 
 		// Ruddervator positions
-		float LRVAngle = MaxRuddervatorAngle * (currentYaw + currentPitch) / 2, 
+		float LRVAngle = MaxRuddervatorAngle * (currentYaw + currentPitch) / 2,
 			RRVAngle = MaxRuddervatorAngle * (currentYaw + currentPitch) / 2;
 
 		// Ruddervators on V-tail
@@ -131,17 +131,17 @@ void ADrone::Tick(float DeltaTime)
 
 		// aileron positions
 		float LAileronAngle = 0, RAileronAngle = 0;
-		LAileronAngle = MaxAileronAngle * -currentBank;	
+		LAileronAngle = MaxAileronAngle * -currentBank;
 		RAileronAngle = MaxAileronAngle * currentBank;
 
 		// aileron roll torque
-		collision->AddTorque(UKismetMathLibrary::TransformDirection(GetTransform(), FVector(forwardVel * LAileronAngle * RollScaleFactor,0,0)));
-		collision->AddTorque(-UKismetMathLibrary::TransformDirection(GetTransform(), FVector(forwardVel * RAileronAngle * RollScaleFactor,0,0)));
+		collision->AddTorque(UKismetMathLibrary::TransformDirection(GetTransform(), FVector(forwardVel * LAileronAngle * RollScaleFactor, 0, 0)));
+		collision->AddTorque(-UKismetMathLibrary::TransformDirection(GetTransform(), FVector(forwardVel * RAileronAngle * RollScaleFactor, 0, 0)));
 
 		// aileron pitch torque
 		//collision->AddTorque(UKismetMathLibrary::TransformDirection(GetTransform(), FVector(0, forwardVel * LAileronAngle * RollScaleFactor, 0)));
 		//collision->AddTorque(UKismetMathLibrary::TransformDirection(GetTransform(), FVector(0, forwardVel * RAileronAngle * RollScaleFactor, 0)));
-	}	
+	}
 
 
 	// angular drag - yaw

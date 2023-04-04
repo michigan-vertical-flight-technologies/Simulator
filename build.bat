@@ -1,2 +1,2 @@
-"C:\Program Files\Epic Games\UE_4.27\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%cd%\PTrain.uproject" -clientconfig=Shipping -cook -allmaps -build -stage -pak -archive -archivedirectory="%cd%\.."
+"C:\Program Files\Epic Games\UE_5.0.3\UE_5.0\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%cd%\PTrain.uproject" -clientconfig=Shipping -cook -allmaps -build -stage -pak -archive -archivedirectory="%cd%\.."
 explorer.exe "%cd%\..\WindowsNoEditor"
