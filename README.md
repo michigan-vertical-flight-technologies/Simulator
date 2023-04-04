@@ -5,11 +5,11 @@ This is the main source repository for the MVFT realtime aircraft simulator for 
 ## Setup
 To configure a CAEN machine to use the simulator in-editor, follow these instructions:
 1. Use AppsAnywhere to install:
-   - Visual Studio
-   - Unreal Engine __4.27__ (NOT 4.23!)
+   - Visual Studio 2019 (Must be installed, but 2022 can also be installed alongside for better editing)
+   - Unreal Engine __5.0.3__ 
+   - Epic Games Launcher (must be installed for `XInput1_3.dll` etc, does not need to be running)
    - TortoiseGit
-2. Open PowerShell and run `git lfs install`. You should also run this if at any point the LFS option does not appear in the TortoiseGit right-click menu when browsing the repository in Explorer. 
-3. Use TortoiseGit to clone this repository (enable Depth 1 to avoid downloading the entire history) __into your Downloads folder__. This is very important, because it is not networked. If you try to open the project from your home folder, it will probably error while filling up your network quota.
+2. Use TortoiseGit to clone this repository (enable Depth 1 to avoid downloading the entire history) __into your Downloads folder__. This is very important, because it is not networked. If you try to open the project from your home folder, it will probably error while filling up your network quota.
     - because of this, you must commit and push all changes you make before logging out, otherwise you may lose your work.
     - ![TortoiseGit](https://user-images.githubusercontent.com/55766810/193943765-d771fc12-c610-43bd-a685-58a3091e3165.png)
 
@@ -34,7 +34,7 @@ To configure on a personal computer:
     - All: 
         - SteamVR (optional) (for VR support, note SteamVR does not support macOS)
         - [git-lfs](https://git-lfs.github.com/) (required for binary file locking)
-        - Unreal Engine __4.27__.
+        - Unreal Engine __5.0.5__.
     - macOS: Xcode
     - Windows: Visual Studio with Desktop Development for C++ module
 3. Clone using `git clone --depth=1`. If you did not install git-lfs, this will not work. 
@@ -92,9 +92,11 @@ Prop.ThrustByRPM,0,30,40,60,100
 The row is (name, x-values). The values afterward are the Y-values. All rows share X values.
 
 Once your CSV file has been created, drag it into the `DataB`P folder in the Unreal Editor and set the dialog properties like so:
+
 ![CSV import settings](https://user-images.githubusercontent.com/55766810/229934963-62684739-73bf-417a-b793-f5064777fe95.png)
 
 Once imported, open the blueprint and the data should be visible.
+
 ![Data blueprint preview](https://user-images.githubusercontent.com/55766810/229935025-690ce646-6f69-4faa-bf8f-640877978767.png)
 
 The imported blueprint will not automatically update to reflect changes made to the CSV. To manually resync, Right click -> Reimport.
