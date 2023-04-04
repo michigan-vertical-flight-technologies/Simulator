@@ -5,11 +5,10 @@ This is the main source repository for the MVFT realtime aircraft simulator for 
 ## Setup
 To configure a CAEN machine to use the simulator in-editor, follow these instructions:
 1. Use AppsAnywhere to install:
-   - Visual Studio
-   - Unreal Engine __4.27__ (NOT 4.23!)
+   - Visual Studio 2019 (Must be installed, but 2022 can also be installed alongside for better editing)
+   - Unreal Engine __5.0.3__ 
    - TortoiseGit
-2. Open PowerShell and run `git lfs install`. You should also run this if at any point the LFS option does not appear in the TortoiseGit right-click menu when browsing the repository in Explorer. 
-3. Use TortoiseGit to clone this repository (enable Depth 1 to avoid downloading the entire history) __into your Downloads folder__. This is very important, because it is not networked. If you try to open the project from your home folder, it will probably error while filling up your network quota.
+2. Use TortoiseGit to clone this repository (enable Depth 1 to avoid downloading the entire history) __into your Downloads folder__. This is very important, because it is not networked. If you try to open the project from your home folder, it will probably error while filling up your network quota.
     - because of this, you must commit and push all changes you make before logging out, otherwise you may lose your work.
     - ![TortoiseGit](https://user-images.githubusercontent.com/55766810/193943765-d771fc12-c610-43bd-a685-58a3091e3165.png)
 
@@ -34,7 +33,7 @@ To configure on a personal computer:
     - All: 
         - SteamVR (optional) (for VR support, note SteamVR does not support macOS)
         - [git-lfs](https://git-lfs.github.com/) (required for binary file locking)
-        - Unreal Engine __4.27__.
+        - Unreal Engine __5.0.5__.
     - macOS: Xcode
     - Windows: Visual Studio with Desktop Development for C++ module
 3. Clone using `git clone --depth=1`. If you did not install git-lfs, this will not work. 
